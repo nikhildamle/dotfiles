@@ -1,4 +1,4 @@
-plugins=(zsh scripts homebrew)
+plugins=(zsh scripts git homebrew)
 
 export DOTFILES_DIR=$HOME/dotfiles
 
