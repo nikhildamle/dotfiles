@@ -1,0 +1,13 @@
+plugins=(zsh)
+
+export DOTFILES_DIR=$HOME/dotfiles
+
+for plugin in $plugins; do
+    for file in $(find -L $DOTFILES_DIR/$plugin -name "*.zshenv"); do
+        source $file
+    done
+
+    for file in $(find -L $DOTFILES_DIR/$plugin -name "*.zsh"); do
+        source $file
+    done
+done
