@@ -6,4 +6,3 @@ TIP="%C(red)%d%C(reset)"
 AUTHOR="%C(blue)%an%C(reset)"
 COMMIT_MESSAGE="%s"
 git log --color --graph --decorate --pretty="tformat:$HASH - $RELATIVE_TIME $TIP - $AUTHOR - $COMMIT_MESSAGE" $* |  less -FXRS
-
