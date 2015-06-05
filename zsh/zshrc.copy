@@ -1,4 +1,4 @@
-plugins=(zsh scripts git homebrew ruby)
+plugins=(zsh scripts git homebrew ruby android)
 
 export DOTFILES_DIR=$HOME/dotfiles
 
