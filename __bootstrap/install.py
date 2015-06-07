@@ -6,6 +6,7 @@ import time
 import shutil
 import hashlib
 import copy
+import difflib
 
 def print_error(message):
     print >> sys.stderr, '\033[91m' + message + '\033[0m'
@@ -145,7 +146,6 @@ def install_dotfiles():
 
     # Create an array of both *.symlink and *.copy files
     filestobackup = filestosymlink[:]
-    filestobackup.extend(filestocopy)
 
     # Calling backup only once puts all backup files in same directory
     # If called multiple times, it might not be the case if time changes between calls
@@ -161,8 +161,16 @@ def install_dotfiles():
     # Copy into home directory for the files/directories matching .copy
     for f in filestocopy:
         destination = dotfile_destination(f)
-        copy(f, dotfile_destination(f))
-        print_success("Copying " + f + " => " + destination)
+        if os.path.exists(destination):
+            existing_file = open(destination)
+            f_to_copy = open(f)
+            if not(f_to_copy.read() in existing_file.read()):
+                print_error("File " + destination + " already exist. Manual merge might be required")
+            existing_file.close()
+            f_to_copy.close()
+        else:
+            copy(f, dotfile_destination(f))
+            print_success("Copying " + f + " => " + destination)
 
 # Run script
 install_dotfiles()
