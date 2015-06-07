@@ -133,7 +133,13 @@ def install_precondition(home_dir):
     if os.path.exists(dotfiles_backup_dir) and not os.path.isdir(dotfiles_backup_dir):
         print_error("A file named ~/dotfiles_backup exist. Delete/Rename that file. Exiting...")
 
-
+def handle_special_files():
+    home_dir = os.path.normpath(os.getenv("HOME"))
+    dotfiles_dir = os.path.join(home_dir, 'dotfiles')
+    source = os.path.join (dotfiles_dir, 'osx/com.github.nikhildamle.dotfiles.environment.plist')
+    destination = os.path.join(home_dir, 'Library/LaunchAgents/')
+    shutil.copy(source, destination)
+    
 def install_dotfiles():
     home_dir = os.path.normpath(os.getenv("HOME"))
     dotfiles_dir = os.path.join(home_dir, 'dotfiles')
@@ -171,6 +177,9 @@ def install_dotfiles():
         else:
             copy(f, dotfile_destination(f))
             print_success("Copying " + f + " => " + destination)
+    
+    # Handle Special Files
+    handle_special_files()
 
 # Run script
 install_dotfiles()
