@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-if command -V brew ; then
+if command -V brew > /dev/null ; then
   echo "Homebrew Already Installed. Updating Homebrew."
   brew update
 else
