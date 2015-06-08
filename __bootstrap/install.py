@@ -137,8 +137,8 @@ def handle_special_files():
     home_dir = os.path.normpath(os.getenv("HOME"))
     dotfiles_dir = os.path.join(home_dir, 'dotfiles')
     source = os.path.join (dotfiles_dir, 'osx/com.github.nikhildamle.dotfiles.environment.plist')
-    destination = os.path.join(home_dir, 'Library/LaunchAgents/')
-    shutil.copy(source, destination)
+    destination = os.path.join(home_dir, 'Library/LaunchAgents/com.github.nikhildamle.dotfiles.environment.plist')
+    os.symlink(source, destination)
     
 def install_dotfiles():
     home_dir = os.path.normpath(os.getenv("HOME"))
