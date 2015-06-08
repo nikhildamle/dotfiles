@@ -7,13 +7,12 @@
   <key>ProgramArguments</key>
   <array>
     <string>bash</string>
-	<string>-c</string>
+    <string>-c</string>
     <string>
-	# Executes all *.env files in ~/dotfiles/ 
-    for env in $(find ~/dotfiles -name '*.env'); do
-		bash $env
-		echo "$env"
-	done
+      # Executes all *.env files in ~/dotfiles/ 
+      for env in $(find ~/dotfiles -name '*.env'); do
+        bash "$env"
+      done
     </string>
   </array>
   <key>KeepAlive</key>
