@@ -10,7 +10,7 @@ python2 ~/dotfiles/install.py
 ```
 
 This will symlink or copy appropriate files in ~/dotfiles directory into home
-directory. All files except *.copy are configured in ~/dotfiles directory.
+directory. All files except .copy are configured in ~/dotfiles directory.
 
 ## concept
 
