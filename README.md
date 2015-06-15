@@ -6,7 +6,7 @@ Run this:
 
 ```sh
 git clone https://github.com/nikhildamle/dotfiles ~/dotfiles
-python2 ~/dotfiles/__bootstrap/install.py
+python2 ~/dotfiles/install.py
 ```
 
 This will symlink or copy appropriate files in ~/dotfiles directory into home
