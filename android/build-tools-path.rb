@@ -1,37 +1,57 @@
+# Semantic versions comparision.
+# Params
+#   v1: Semantic version as string
+#   v2: Semantic version as string
+# Returns
+#   0 if both versions are equal
+#  -1 if v1 < v2
+#   1 if v1 > v2
 def compare(v1, v2)
-	v1parts = v1.split(".")
-	v2parts = v2.split(".")
+	v1parts = v1.split('.')
+	v2parts = v2.split('.')
 
-	v1parts.push("0") until v1parts.length >= v2parts.length 
-	v2parts.push("0") until v2parts.length >= v1parts.length
+	v1parts.push('0') until v1parts.length >= v2parts.length 
+	v2parts.push('0') until v2parts.length >= v1parts.length
 
 	for i in 0..v1parts.length
-		if v1parts[i] == v2parts[i]
-			next
-		elsif v1parts[i] > v2parts[i]
+    # Parts are equal. Move to next part
+		next if v1parts[i] == v2parts[i]
+
+    # Parts are NOT equal. Compare
+		if v1parts[i] > v2parts[i]
 			return 1
 		else
 			return -1
 		end
 	end
-
+  
+  # v1 and v2 are same
 	return 0;
 end
 
+# Lists subdirectories
+# Params:
+#   path: absolute or relative path
+# Returns:
+#   Array of sub directories name    
 def sub_directories_name (path)
-	files_without_current_and_parent_directories = Dir.entries(path).reject { |entry| entry == '.' || entry == '..' }
-	files_without_current_and_parent_directories.select { |dir| File.directory?(File.join(path, dir)) }
+	Dir.entries(path).reject { |entry| entry == '.' || entry == '..' }.select { |dir| File.directory?(File.join(path, dir)) }
 end
 
-def replace_tilde_with_home (path)
+# Replaces ~ in Environment Variables with $HOME
+def substitute_tilde (path)
 	path.dup.gsub('~', ENV['HOME'])
 end
 
+# Lists build tools installed.
 def build_tools_installed
-	build_tools_location = File.join(replace_tilde_with_home(ENV['ANDROID_SDK']), "build-tools")
+  # Different versions of build tools are stored in the $ANDROID_SDK/build-tools
+  # as sub directories with the version number as its name
+	build_tools_location = File.join(substitute_tilde(ENV['ANDROID_SDK']), "build-tools")
 	sub_directories_name(build_tools_location)
 end
 
+# Returns latest build tool installed
 def latest_build_tool (versions)
 	latest = versions.first
 	versions.map do |entry|
@@ -40,6 +60,11 @@ def latest_build_tool (versions)
 	return latest
 end
 
+# Appends build tool path to $PATH environment variable
+# Params:
+#   Version of build tool
+# Returns:
+#   bash export statement
 def add_to_path(version)
 	latest_build_tool_directory = "$ANDROID_SDK/build-tools/#{version}"
 	return "export PATH=\"#{latest_build_tool_directory}:$PATH\""
@@ -50,7 +75,12 @@ def export_path
 		latest_version = latest_build_tool(build_tools_installed)
 		return add_to_path(latest_version)
 	end
+  # Return empty string if build tools are not installed
   ''
 end
 
+# Setting PATH variable here does not affect terminal emulator (parent process)
+# Instead print a bash export statement here.
+# Companion shell script can then use $ eval (ruby thisfile.rb)
+# and have PATH variable set in terminal emulator.
 puts export_path
