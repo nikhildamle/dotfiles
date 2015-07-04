@@ -40,8 +40,8 @@ def replace_tilde_with_home (path)
 end
 
 def build_tools_installed
-		build_tools_location = File.join(replace_tilde_with_home(ENV['ANDROID_SDK']), "build-tools")
-		sub_directories_name(build_tools_location)
+	build_tools_location = File.join(replace_tilde_with_home(ENV['ANDROID_SDK']), "build-tools")
+	sub_directories_name(build_tools_location)
 end
 
 def latest_build_tool (versions)
@@ -58,10 +58,10 @@ def add_to_path(version)
 end
 
 def export_path
-		if build_tools_installed.length != 0
-			latest_version = latest_build_tool(build_tools_installed)
-			return add_to_path(latest_version)
-		end
+	if build_tools_installed.length != 0
+		latest_version = latest_build_tool(build_tools_installed)
+		return add_to_path(latest_version)
+	end
 end
 
 puts export_path
