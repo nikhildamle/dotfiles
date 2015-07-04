@@ -40,7 +40,6 @@ def replace_tilde_with_home (path)
 end
 
 def build_tools_installed
-		raise 'ANDROID_SDK environment variable not set' if not ENV.has_key? 'ANDROID_SDK'
 		build_tools_location = File.join(replace_tilde_with_home(ENV['ANDROID_SDK']), "build-tools")
 		sub_directories_name(build_tools_location)
 end
@@ -59,18 +58,10 @@ def add_to_path(version)
 end
 
 def export_path
-	if ENV.has_key? 'ANDROID_SDK'
-		if build_tools_installed.length  == 0
-			return 'echo "Android build tools not found"'
-		elsif build_tools_installed.length == 1
-			return add_to_path(build_tools_installed.first)
-		else
+		if build_tools_installed.length != 0
 			latest_version = latest_build_tool(build_tools_installed)
 			return add_to_path(latest_version)
 		end
-	else
-		return 'echo set $ANDROID_SDK to SDK path'
-	end
 end
 
 puts export_path
