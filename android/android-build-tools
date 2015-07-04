@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # Semantic versions comparision.
 # Params
 #   v1: Semantic version as string

@@ -5,5 +5,5 @@ export PATH="$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$PATH"
 
 # Add latest build-tools to path. Requires ruby to be installed.
 if command -V ruby > /dev/null; then
-	eval "$(ruby $DOTFILES_DIR/android/build-tools-path.rb)"
+	eval "$($DOTFILES_DIR/android/android-build-tools)"
 fi
