@@ -2,18 +2,10 @@ def compare(v1, v2)
 	v1parts = v1.split(".")
 	v2parts = v2.split(".")
 
-	while v1parts.length < v2parts.length
-		v1parts.push("0")
-	end
-	while v2parts.length < v1parts.length
-		v2parts.push("0")
-	end
+	v1parts.push("0") until v1parts.length >= v2parts.length 
+	v2parts.push("0") until v2parts.length >= v1parts.length
 
 	for i in 0..v1parts.length
-		if v2parts.length == i
-			return 1
-		end
-
 		if v1parts[i] == v2parts[i]
 			next
 		elsif v1parts[i] > v2parts[i]
@@ -23,10 +15,6 @@ def compare(v1, v2)
 		end
 	end
 
-	if v1parts.length != v2parts.length
-		return -1
-	end
- 
 	return 0;
 end
 
@@ -62,6 +50,7 @@ def export_path
 		latest_version = latest_build_tool(build_tools_installed)
 		return add_to_path(latest_version)
 	end
+  ''
 end
 
 puts export_path
