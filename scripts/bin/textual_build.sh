@@ -1,6 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
+(
+  source $DOTFILES_DIR/scripts/common/os.bash
+
+  if ! is_osx; then
+    echo 'This platform not supported. Textual is a OS X only App'
+    exit
+  fi
+
   source_dir="$HOME/code/Textual"
 
   # pull or clone repository
@@ -21,9 +28,4 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     osascript -e 'tell application "Finder" to delete POSIX file "/Applications/Textual.app"'
   fi
   mv "Build Results/Release/Textual 5.app" "/Applications/"
-
-  # get back to previous directory
-  cd -
-else
-  echo 'This platform not supported. Textual is a OS X only App'
-fi
+)
