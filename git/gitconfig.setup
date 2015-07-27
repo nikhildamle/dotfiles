@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Source this repos gitconfig from global gitconfig
+# include.path cannot contain environment variable, but ~ is supported
+git config --global --add include.path "$DOTFILES_DIR/git/gitconfig"

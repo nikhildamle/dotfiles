@@ -1,4 +1,0 @@
-[color]
-  ui = true
-[alias]
-  l = "!$DOTFILES_DIR/git/pretty_git_log.sh"
